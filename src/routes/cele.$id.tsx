@@ -1,13 +1,21 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, Check, Pencil } from "lucide-react";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { ArrowLeft, Calendar, Check, Pencil, Sparkles, Trash2 } from "lucide-react";
 
 import { AppShell } from "@/components/AppShell";
+import { ConfirmAction } from "@/components/ConfirmAction";
 import { CardLabel, GlassCard } from "@/components/GlassCard";
 import { ProgressRing } from "@/components/ProgressRing";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { useAppState } from "@/context/app-state";
-import { daysLabelPL, daysLeft, formatDatePL, goalById, sortedEntries } from "@/lib/goals";
+import {
+  daysLabelPL,
+  daysLeft,
+  formatDatePL,
+  formatShortDatePL,
+  goalById,
+  sortedEntries,
+} from "@/lib/goals";
 import { ANSWER_LABEL, HORIZON_LABEL } from "@/types/goals";
 
 export const Route = createFileRoute("/cele/$id")({
@@ -24,7 +32,8 @@ export const Route = createFileRoute("/cele/$id")({
 
 function GoalDetailsPage() {
   const { id } = Route.useParams();
-  const { data, toggleMilestone, updateGoalProgress } = useAppState();
+  const { data, toggleMilestone, updateGoalProgress, deleteGoal } = useAppState();
+  const navigate = useNavigate();
   const goal = goalById(data, id);
 
   if (!goal) {
@@ -46,10 +55,14 @@ function GoalDetailsPage() {
     <AppShell title={HORIZON_LABEL[goal.horizon]} meta={goal.isPrimary ? "główny" : undefined}>
       <div className="flex items-center justify-between px-1">
         <Button asChild variant="ghost" size="icon" aria-label="Wróć do celów">
-          <Link to="/cele"><ArrowLeft /></Link>
+          <Link to="/cele">
+            <ArrowLeft />
+          </Link>
         </Button>
         <Button asChild variant="ghost" size="icon" aria-label="Edytuj cel">
-          <Link to="/cele/nowy" search={{ edit: goal.id }}><Pencil /></Link>
+          <Link to="/cele/nowy" search={{ edit: goal.id }}>
+            <Pencil />
+          </Link>
         </Button>
       </div>
 
@@ -87,6 +100,11 @@ function GoalDetailsPage() {
       <GlassCard>
         <CardLabel>Kamienie milowe</CardLabel>
         <div className="mt-4 space-y-2">
+          {goal.milestones.length === 0 ? (
+            <p className="text-sm text-foreground/50">
+              Dodaj kamienie milowe w edycji celu — pomagają AI planować następne kroki.
+            </p>
+          ) : null}
           {goal.milestones.map((milestone) => (
             <Button
               key={milestone.id}
@@ -95,10 +113,21 @@ function GoalDetailsPage() {
               onClick={() => toggleMilestone(milestone.id)}
               className="h-auto w-full justify-start whitespace-normal rounded-xl bg-glass-soft px-3 py-3 text-left"
             >
-              <span className={`flex size-5 shrink-0 items-center justify-center rounded-full ring-1 ring-hairline ${milestone.done ? "bg-primary text-primary-foreground" : "bg-glass"}`}>
+              <span
+                className={`flex size-5 shrink-0 items-center justify-center rounded-full ring-1 ring-hairline ${milestone.done ? "bg-primary text-primary-foreground" : "bg-glass"}`}
+              >
                 {milestone.done ? <Check className="size-3" /> : null}
               </span>
-              <span className={milestone.done ? "text-foreground/45 line-through" : "text-foreground/80"}>{milestone.title}</span>
+              <span
+                className={`flex-1 ${milestone.done ? "text-foreground/45 line-through" : "text-foreground/80"}`}
+              >
+                {milestone.title}
+              </span>
+              {milestone.dueDate ? (
+                <span className="shrink-0 text-[11px] tabular-nums text-foreground/40">
+                  {formatShortDatePL(milestone.dueDate)}
+                </span>
+              ) : null}
             </Button>
           ))}
         </div>
@@ -107,17 +136,45 @@ function GoalDetailsPage() {
       <GlassCard>
         <CardLabel>Ostatnie wpisy</CardLabel>
         <div className="mt-4 divide-y divide-hairline">
-          {entries.length ? entries.slice(0, 4).map((entry) => (
-            <div key={entry.id} className="py-3 first:pt-0 last:pb-0">
-              <div className="flex justify-between text-xs">
-                <span className="text-foreground/45">{formatDatePL(entry.date)}</span>
-                <span className="text-primary">{ANSWER_LABEL[entry.answer]}</span>
+          {entries.length ? (
+            entries.slice(0, 4).map((entry) => (
+              <div key={entry.id} className="py-3 first:pt-0 last:pb-0">
+                <div className="flex justify-between text-xs">
+                  <span className="text-foreground/45">{formatDatePL(entry.date)}</span>
+                  <span className="text-primary">{ANSWER_LABEL[entry.answer]}</span>
+                </div>
+                <p className="mt-1 text-sm text-foreground/70">{entry.note || "Bez notatki"}</p>
+                {entry.reflection ? (
+                  <p className="mt-2 flex gap-1.5 text-xs leading-relaxed text-foreground/50">
+                    <Sparkles className="mt-0.5 size-3 shrink-0 text-primary" />
+                    {entry.reflection.nextStep}
+                  </p>
+                ) : null}
               </div>
-              <p className="mt-1 text-sm text-foreground/70">{entry.note || "Bez notatki"}</p>
-            </div>
-          )) : <p className="text-sm text-foreground/50">Pierwszy wpis pojawi się po wieczornym podsumowaniu.</p>}
+            ))
+          ) : (
+            <p className="text-sm text-foreground/50">
+              Pierwszy wpis pojawi się po wieczornym podsumowaniu.
+            </p>
+          )}
         </div>
       </GlassCard>
+
+      <ConfirmAction
+        trigger={
+          <Button type="button" variant="ghost" className="w-full rounded-xl text-foreground/45">
+            <Trash2 />
+            Usuń cel
+          </Button>
+        }
+        title="Usunąć ten cel?"
+        description="Cel i jego kamienie milowe znikną. Wpisy dnia zostaną w historii."
+        confirmLabel="Usuń cel"
+        onConfirm={() => {
+          deleteGoal(goal.id);
+          void navigate({ to: "/cele" });
+        }}
+      />
     </AppShell>
   );
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Szklana karta widżetu: atrament + włoskowata krawędź, jak glass-card w aplikacji. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/ink" />
+    <stroke android:width="1dp" android:color="@color/hairline" />
+    <corners android:radius="24dp" />
+</shape>

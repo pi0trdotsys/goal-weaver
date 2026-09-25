@@ -1,4 +1,4 @@
-import type { AppData, DayEntry, Goal, Horizon } from "@/types/goals";
+import type { AiReflection, AppData, DayEntry, Goal, Horizon, Milestone } from "@/types/goals";
 import { HORIZON_ORDER } from "@/types/goals";
 
 /** Zwraca dzisiejszą datę jako YYYY-MM-DD (czas lokalny). */
@@ -116,10 +116,59 @@ export function formatDatePL(iso: string): string {
   return `${d.getDate()} ${MONTHS_PL[d.getMonth()]} ${d.getFullYear()}`;
 }
 
+/** "14 marca" */
+export function formatShortDatePL(iso: string): string {
+  const d = new Date(`${iso}T00:00:00`);
+  return `${d.getDate()} ${MONTHS_PL[d.getMonth()]}`;
+}
+
 /** "47 dni" / "1 dzień" / "3 dni" */
 export function daysLabelPL(n: number): string {
   if (n === 1) return "1 dzień";
   return `${n} dni`;
+}
+
+/** Przesuwa datę ISO o `days` dni (może być ujemne). */
+export function addDaysISO(iso: string, days: number): string {
+  const d = new Date(`${iso}T12:00:00`);
+  d.setDate(d.getDate() + days);
+  return todayISO(d);
+}
+
+/**
+ * Dzień, którego dotyczy wieczorna refleksja. Wpis zrobiony po północy
+ * (do 4:00) nadal dotyczy poprzedniego dnia.
+ */
+export function reflectionDateISO(now = new Date()): string {
+  const iso = todayISO(now);
+  return now.getHours() < 4 ? addDaysISO(iso, -1) : iso;
+}
+
+/** Najbliższy nieukończony kamień milowy (najpierw te z terminem). */
+export function nextMilestone(goal: Goal): Milestone | undefined {
+  const open = goal.milestones.filter((m) => !m.done);
+  const dated = open
+    .filter((m) => m.dueDate)
+    .sort((a, b) => ((a.dueDate ?? "") < (b.dueDate ?? "") ? -1 : 1));
+  return dated[0] ?? open[0];
+}
+
+/**
+ * Ostatni wpis z refleksją AI dla celu, nie starszy niż `maxAgeDays`
+ * względem `from`. Używany przez poranne powiadomienie, kartę „Cel na dziś”
+ * i widżet.
+ */
+export function latestReflectionEntry(
+  entries: DayEntry[],
+  goalId: string,
+  from: string = todayISO(),
+  maxAgeDays = 1,
+): (DayEntry & { reflection: AiReflection }) | undefined {
+  const oldest = addDaysISO(from, -maxAgeDays);
+  return sortedEntries(entries).find(
+    (e): e is DayEntry & { reflection: AiReflection } =>
+      e.goalId === goalId && e.reflection !== null && e.date <= from && e.date >= oldest,
+  );
 }
 
 export function newId(prefix: string): string {

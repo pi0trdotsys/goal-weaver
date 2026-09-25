@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tokeny kierunku "Frosted index card" — te same wartości co w src/styles.css. -->
+<resources>
+    <color name="ink">#23231E</color>
+    <color name="paper">#ECEAE1</color>
+    <color name="amber">#B07A41</color>
+    <color name="paper_muted">#8CECEAE1</color>
+    <color name="hairline">#1AFFFFFF</color>
+    <color name="colorPrimary">#23231E</color>
+    <color name="colorPrimaryDark">#23231E</color>
+    <color name="colorAccent">#B07A41</color>
+</resources>

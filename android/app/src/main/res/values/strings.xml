@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kierunek</string>
+    <string name="title_activity_main">Kierunek</string>
+    <string name="package_name">com.devqube.kierunek</string>
+    <string name="custom_url_scheme">com.devqube.kierunek</string>
+    <string name="widget_description">Twój cel i motywujący tekst na każdy dzień</string>
+    <string name="widget_empty">Zapisz swój pierwszy cel. Dokąd zmierzasz?</string>
+    <string name="widget_label_default">KIERUNEK</string>
+    <string name="widget_progress_caption">POSTĘP</string>
+</resources>

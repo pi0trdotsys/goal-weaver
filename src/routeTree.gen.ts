@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as RefleksjaRouteImport } from './routes/refleksja'
 import { Route as UstawieniaRouteImport } from './routes/ustawienia'
 import { Route as CeleIndexRouteImport } from './routes/cele.index'
 import { Route as CeleIdRouteImport } from './routes/cele.$id'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const HistoriaRoute = HistoriaRouteImport.update({
   id: '/historia',
   path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefleksjaRoute = RefleksjaRouteImport.update({
+  id: '/refleksja',
+  path: '/refleksja',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UstawieniaRoute = UstawieniaRouteImport.update({
@@ -50,6 +56,7 @@ const CeleNowyRoute = CeleNowyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/historia': typeof HistoriaRoute
+  '/refleksja': typeof RefleksjaRoute
   '/ustawienia': typeof UstawieniaRoute
   '/cele/$id': typeof CeleIdRoute
   '/cele/nowy': typeof CeleNowyRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/historia': typeof HistoriaRoute
+  '/refleksja': typeof RefleksjaRoute
   '/ustawienia': typeof UstawieniaRoute
   '/cele/$id': typeof CeleIdRoute
   '/cele/nowy': typeof CeleNowyRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/historia': typeof HistoriaRoute
+  '/refleksja': typeof RefleksjaRoute
   '/ustawienia': typeof UstawieniaRoute
   '/cele/$id': typeof CeleIdRoute
   '/cele/nowy': typeof CeleNowyRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/historia' | '/ustawienia' | '/cele/$id' | '/cele/nowy' | '/cele/'
+    | '/'
+    | '/historia'
+    | '/refleksja'
+    | '/ustawienia'
+    | '/cele/$id'
+    | '/cele/nowy'
+    | '/cele/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/historia' | '/ustawienia' | '/cele/$id' | '/cele/nowy' | '/cele'
+  to:
+    | '/'
+    | '/historia'
+    | '/refleksja'
+    | '/ustawienia'
+    | '/cele/$id'
+    | '/cele/nowy'
+    | '/cele'
   id:
     | '__root__'
     | '/'
     | '/historia'
+    | '/refleksja'
     | '/ustawienia'
     | '/cele/$id'
     | '/cele/nowy'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   HistoriaRoute: typeof HistoriaRoute
+  RefleksjaRoute: typeof RefleksjaRoute
   UstawieniaRoute: typeof UstawieniaRoute
   CeleIdRoute: typeof CeleIdRoute
   CeleNowyRoute: typeof CeleNowyRoute
@@ -111,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/historia'
       fullPath: '/historia'
       preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refleksja': {
+      id: '/refleksja'
+      path: '/refleksja'
+      fullPath: '/refleksja'
+      preLoaderRoute: typeof RefleksjaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ustawienia': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   HistoriaRoute: HistoriaRoute,
+  RefleksjaRoute: RefleksjaRoute,
   UstawieniaRoute: UstawieniaRoute,
   CeleIdRoute: CeleIdRoute,
   CeleNowyRoute: CeleNowyRoute,

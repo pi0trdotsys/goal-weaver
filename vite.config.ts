@@ -6,10 +6,16 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// `npm run build:mobile` ustawia GW_TARGET=mobile: statyczny build SPA pakowany
+// przez Capacitor do aplikacji Android (patrz docs/android.md). Zwykły build
+// (Lovable / Cloudflare) pozostaje bez zmian.
+const mobile = process.env["GW_TARGET"] === "mobile";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    ...(mobile ? { spa: { enabled: true, prerender: { outputPath: "/index.html" } } } : {}),
   },
 });

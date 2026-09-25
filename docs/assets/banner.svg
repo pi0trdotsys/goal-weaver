@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 420" width="1280" height="420" role="img" aria-label="Kierunek — tracker celów długofalowych">
+  <defs>
+    <radialGradient id="halo" cx="640" cy="40" r="620" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B07A41" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#B07A41" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ECEAE1" stroke-opacity="0.045" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#23231E" stop-opacity="0"/>
+      <stop offset="1" stop-color="#23231E" stop-opacity="1"/>
+    </linearGradient>
+    <clipPath id="frame"><rect width="1280" height="420" rx="28"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="1280" height="420" fill="#23231E"/>
+    <rect width="1280" height="420" fill="url(#grid)"/>
+    <rect width="1280" height="420" fill="url(#halo)"/>
+    <rect y="260" width="1280" height="160" fill="url(#fade)"/>
+
+    <!-- znak: pierścień + łuk postępu 75% + punkt celu -->
+    <g transform="translate(640 138)">
+      <circle r="58" fill="#FFFFFF" fill-opacity="0.06"/>
+      <circle r="42" fill="none" stroke="#ECEAE1" stroke-opacity="0.14" stroke-width="5"/>
+      <path d="M0,-42A42,42 0,1 1,-42,0" fill="none" stroke="#B07A41" stroke-width="5.5" stroke-linecap="round"/>
+      <circle r="8" fill="#ECEAE1"/>
+    </g>
+
+    <text x="640" y="262" text-anchor="middle" fill="#ECEAE1"
+          font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="54" letter-spacing="18">KIERUNEK</text>
+    <text x="640" y="304" text-anchor="middle" fill="#ECEAE1" fill-opacity="0.55"
+          font-family="Figtree, 'Segoe UI', system-ui, sans-serif" font-size="20" letter-spacing="1">tracker celów długofalowych · 3 miesiące · 6 miesięcy · rok · dwa lata</text>
+    <text x="640" y="360" text-anchor="middle" fill="#B07A41"
+          font-family="'JetBrains Mono', 'Cascadia Code', Consolas, monospace" font-size="14" letter-spacing="4">LOCAL-FIRST  ·  ANDROID  ·  WIDŻET 4×1  ·  REFLEKSJA Z AI</text>
+
+    <rect x="0.5" y="0.5" width="1279" height="419" rx="28" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  </g>
+</svg>

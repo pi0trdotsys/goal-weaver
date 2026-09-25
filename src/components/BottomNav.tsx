@@ -10,8 +10,8 @@ const ITEMS = [
 
 export function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[390px] px-5 pb-5">
-      <div className="glass-card flex items-center justify-between rounded-full px-2 py-2">
+    <nav className="pointer-events-none fixed inset-x-0 bottom-0 z-20 mx-auto max-w-[440px] bg-gradient-to-t from-background via-background/85 to-transparent px-5 pb-[calc(env(safe-area-inset-bottom)+1.25rem)] pt-8">
+      <div className="glass-card pointer-events-auto flex items-center justify-between rounded-full px-2 py-2">
         {ITEMS.map((item) => (
           <Link
             key={item.to}

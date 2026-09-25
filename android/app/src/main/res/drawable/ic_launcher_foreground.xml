@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Znak aplikacji: szklany dysk, cienki pierścień i bursztynowy łuk postępu (75%,
+  jak ProgressRing), w środku punkt celu. Mieści się w bezpiecznej strefie 66dp.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- matowe szkło -->
+    <path
+        android:fillColor="#14FFFFFF"
+        android:pathData="M54,24a30,30 0,1 1,0 60a30,30 0,1 1,0 -60z" />
+    <!-- tor pierścienia -->
+    <path
+        android:strokeColor="#26ECEAE1"
+        android:strokeWidth="3.2"
+        android:fillColor="#00000000"
+        android:pathData="M54,32a22,22 0,1 1,0 44a22,22 0,1 1,0 -44z" />
+    <!-- łuk postępu: od góry, zgodnie z ruchem wskazówek, 270° -->
+    <path
+        android:strokeColor="#B07A41"
+        android:strokeWidth="3.6"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,32A22,22 0,1 1,32,54" />
+    <!-- cel -->
+    <path
+        android:fillColor="#ECEAE1"
+        android:pathData="M54,49.5a4.5,4.5 0,1 1,0 9a4.5,4.5 0,1 1,0 -9z" />
+</vector>

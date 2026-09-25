@@ -1,8 +1,8 @@
 import type { AppData } from "@/types/goals";
 
 /**
- * Dane przykładowe dla makiet. Podmiana na prawdziwe źródło = jedna warstwa
- * (patrz docs/kontrakty.md).
+ * Dane przykładowe — do wczytania z Ustawień („Wczytaj przykładowe dane”),
+ * żeby obejrzeć aplikację bez wpisywania własnych celów.
  */
 
 export const mockData: AppData = {
@@ -11,6 +11,7 @@ export const mockData: AppData = {
     eveningTime: "21:00",
     notificationsEnabled: true,
     primaryGoalId: "goal_pracownia",
+    ai: { enabled: false, baseUrl: "", model: "", apiKey: "" },
   },
   goals: [
     {
@@ -23,10 +24,34 @@ export const mockData: AppData = {
       progress: 74,
       isPrimary: true,
       milestones: [
-        { id: "ms_1", goalId: "goal_pracownia", title: "Znaleźć lokal", done: true, dueDate: "2026-07-27" },
-        { id: "ms_2", goalId: "goal_pracownia", title: "Podpisać umowę najmu", done: true, dueDate: "2026-08-26" },
-        { id: "ms_3", goalId: "goal_pracownia", title: "Wyposażyć warsztat", done: false, dueDate: "2026-10-15" },
-        { id: "ms_4", goalId: "goal_pracownia", title: "Dzień otwarty", done: false, dueDate: "2026-11-11" },
+        {
+          id: "ms_1",
+          goalId: "goal_pracownia",
+          title: "Znaleźć lokal",
+          done: true,
+          dueDate: "2026-07-27",
+        },
+        {
+          id: "ms_2",
+          goalId: "goal_pracownia",
+          title: "Podpisać umowę najmu",
+          done: true,
+          dueDate: "2026-08-26",
+        },
+        {
+          id: "ms_3",
+          goalId: "goal_pracownia",
+          title: "Wyposażyć warsztat",
+          done: false,
+          dueDate: "2026-10-15",
+        },
+        {
+          id: "ms_4",
+          goalId: "goal_pracownia",
+          title: "Dzień otwarty",
+          done: false,
+          dueDate: "2026-11-11",
+        },
       ],
     },
     {
@@ -39,8 +64,20 @@ export const mockData: AppData = {
       progress: 62,
       isPrimary: false,
       milestones: [
-        { id: "ms_5", goalId: "goal_ksiazka", title: "Rozdział 7", done: true, dueDate: "2026-09-15" },
-        { id: "ms_6", goalId: "goal_ksiazka", title: "Redakcja całości", done: false, dueDate: "2026-11-04" },
+        {
+          id: "ms_5",
+          goalId: "goal_ksiazka",
+          title: "Rozdział 7",
+          done: true,
+          dueDate: "2026-09-15",
+        },
+        {
+          id: "ms_6",
+          goalId: "goal_ksiazka",
+          title: "Redakcja całości",
+          done: false,
+          dueDate: "2026-11-04",
+        },
       ],
     },
     {
@@ -53,8 +90,20 @@ export const mockData: AppData = {
       progress: 41,
       isPrimary: false,
       milestones: [
-        { id: "ms_7", goalId: "goal_kaucja", title: "Pierwsze 10 tys.", done: true, dueDate: "2026-09-05" },
-        { id: "ms_8", goalId: "goal_kaucja", title: "Drugie 10 tys.", done: false, dueDate: "2026-12-24" },
+        {
+          id: "ms_7",
+          goalId: "goal_kaucja",
+          title: "Pierwsze 10 tys.",
+          done: true,
+          dueDate: "2026-09-05",
+        },
+        {
+          id: "ms_8",
+          goalId: "goal_kaucja",
+          title: "Drugie 10 tys.",
+          done: false,
+          dueDate: "2026-12-24",
+        },
       ],
     },
     {
@@ -67,17 +116,79 @@ export const mockData: AppData = {
       progress: 15,
       isPrimary: false,
       milestones: [
-        { id: "ms_9", goalId: "goal_zdrowie", title: "Bieg 10 km bez pauz", done: false, dueDate: "2027-01-23" },
+        {
+          id: "ms_9",
+          goalId: "goal_zdrowie",
+          title: "Bieg 10 km bez pauz",
+          done: false,
+          dueDate: "2027-01-23",
+        },
       ],
     },
   ],
   entries: [
-    { id: "e_1", date: "2026-09-24", goalId: "goal_pracownia", answer: "yes", note: "Zamówiłem stół roboczy." },
-    { id: "e_2", date: "2026-09-23", goalId: "goal_pracownia", answer: "partly", note: "Tylko telefon w sprawie prądu." },
-    { id: "e_3", date: "2026-09-22", goalId: "goal_pracownia", answer: "yes", note: "Pomiary pomieszczenia." },
-    { id: "e_4", date: "2026-09-21", goalId: "goal_ksiazka", answer: "yes", note: "Dwie strony rozdziału ósmego." },
-    { id: "e_5", date: "2026-09-20", goalId: "goal_pracownia", answer: "no", note: "Dzień zjadły sprawy urzędowe." },
-    { id: "e_6", date: "2026-09-19", goalId: "goal_pracownia", answer: "yes", note: "Rozmowa z elektrykiem." },
-    { id: "e_7", date: "2026-09-18", goalId: "goal_kaucja", answer: "yes", note: "Przelew na konto oszczędnościowe." },
+    {
+      id: "e_1",
+      date: "2026-09-24",
+      goalId: "goal_pracownia",
+      answer: "yes",
+      note: "Zamówiłem stół roboczy.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_2",
+      date: "2026-09-23",
+      goalId: "goal_pracownia",
+      answer: "partly",
+      note: "Tylko telefon w sprawie prądu.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_3",
+      date: "2026-09-22",
+      goalId: "goal_pracownia",
+      answer: "yes",
+      note: "Pomiary pomieszczenia.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_4",
+      date: "2026-09-21",
+      goalId: "goal_ksiazka",
+      answer: "yes",
+      note: "Dwie strony rozdziału ósmego.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_5",
+      date: "2026-09-20",
+      goalId: "goal_pracownia",
+      answer: "no",
+      note: "Dzień zjadły sprawy urzędowe.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_6",
+      date: "2026-09-19",
+      goalId: "goal_pracownia",
+      answer: "yes",
+      note: "Rozmowa z elektrykiem.",
+      obstacle: "",
+      reflection: null,
+    },
+    {
+      id: "e_7",
+      date: "2026-09-18",
+      goalId: "goal_kaucja",
+      answer: "yes",
+      note: "Przelew na konto oszczędnościowe.",
+      obstacle: "",
+      reflection: null,
+    },
   ],
 };
