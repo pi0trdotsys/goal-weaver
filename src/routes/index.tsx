@@ -17,6 +17,7 @@ import {
   todayISO,
 } from "@/lib/goals";
 import type { DayAnswer } from "@/types/goals";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -65,7 +66,7 @@ function TodayPage() {
   const streak = currentStreak(data.entries);
 
   return (
-    <AppShell title="Cele" meta={new Date().getFullYear()}>
+    <AppShell title="Dziś" meta="2026">
       <GlassCard className="relative overflow-hidden rounded-[28px] p-6">
         <div className="absolute right-6 top-6 flex items-center gap-1.5 rounded-full bg-glass-strong px-3 py-1.5 ring-1 ring-hairline">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
@@ -136,7 +137,7 @@ function TodayPage() {
             className="w-full rounded-xl bg-glass-soft px-3 py-2.5 text-[13px] text-foreground ring-1 ring-hairline outline-none placeholder:text-foreground/35 focus:ring-primary/50"
           />
         </div>
-        <button
+        <Button
           type="button"
           disabled={!answer || saved}
           onClick={() => {
@@ -144,10 +145,10 @@ function TodayPage() {
             saveDayEntry({ goalId: goal.id, answer, note });
             setSaved(true);
           }}
-          className="press mt-3 w-full rounded-xl bg-primary py-2.5 text-[13px] font-semibold text-primary-foreground ring-1 ring-hairline disabled:bg-glass disabled:text-foreground/45"
+          className="press mt-3 h-10 w-full rounded-xl text-[13px] ring-1 ring-hairline disabled:bg-glass disabled:text-foreground/45"
         >
           {saved ? "Zapisano dzisiejszy wpis" : "Zapisz dzień"}
-        </button>
+        </Button>
       </GlassCard>
 
       <GlassCard>

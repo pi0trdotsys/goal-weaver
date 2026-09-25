@@ -13,9 +13,7 @@ export function AppShell({
 }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-foreground selection:bg-primary/30">
-      <div className="pointer-events-none absolute -left-16 -top-20 size-72 rounded-full bg-halo blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-40 size-80 rounded-full bg-primary/25 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-8 left-1/2 size-64 -translate-x-1/2 rounded-full bg-glass-soft blur-3xl" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-halo blur-3xl" />
 
       <div className="relative mx-auto flex max-w-[390px] flex-col gap-3 px-5 pb-28 pt-6">
         <header className="flex items-center justify-between">
