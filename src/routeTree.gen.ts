@@ -10,11 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HistoriaRouteImport } from './routes/historia'
+import { Route as UstawieniaRouteImport } from './routes/ustawienia'
 import { Route as CeleIndexRouteImport } from './routes/cele.index'
+import { Route as CeleIdRouteImport } from './routes/cele.$id'
+import { Route as CeleNowyRouteImport } from './routes/cele.nowy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriaRoute = HistoriaRouteImport.update({
+  id: '/historia',
+  path: '/historia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UstawieniaRoute = UstawieniaRouteImport.update({
+  id: '/ustawienia',
+  path: '/ustawienia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CeleIndexRoute = CeleIndexRouteImport.update({
@@ -22,30 +36,64 @@ const CeleIndexRoute = CeleIndexRouteImport.update({
   path: '/cele/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CeleIdRoute = CeleIdRouteImport.update({
+  id: '/cele/$id',
+  path: '/cele/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CeleNowyRoute = CeleNowyRouteImport.update({
+  id: '/cele/nowy',
+  path: '/cele/nowy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/historia': typeof HistoriaRoute
+  '/ustawienia': typeof UstawieniaRoute
+  '/cele/$id': typeof CeleIdRoute
+  '/cele/nowy': typeof CeleNowyRoute
   '/cele/': typeof CeleIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/historia': typeof HistoriaRoute
+  '/ustawienia': typeof UstawieniaRoute
+  '/cele/$id': typeof CeleIdRoute
+  '/cele/nowy': typeof CeleNowyRoute
   '/cele': typeof CeleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/historia': typeof HistoriaRoute
+  '/ustawienia': typeof UstawieniaRoute
+  '/cele/$id': typeof CeleIdRoute
+  '/cele/nowy': typeof CeleNowyRoute
   '/cele/': typeof CeleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cele/'
+  fullPaths:
+    '/' | '/historia' | '/ustawienia' | '/cele/$id' | '/cele/nowy' | '/cele/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cele'
-  id: '__root__' | '/' | '/cele/'
+  to: '/' | '/historia' | '/ustawienia' | '/cele/$id' | '/cele/nowy' | '/cele'
+  id:
+    | '__root__'
+    | '/'
+    | '/historia'
+    | '/ustawienia'
+    | '/cele/$id'
+    | '/cele/nowy'
+    | '/cele/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HistoriaRoute: typeof HistoriaRoute
+  UstawieniaRoute: typeof UstawieniaRoute
+  CeleIdRoute: typeof CeleIdRoute
+  CeleNowyRoute: typeof CeleNowyRoute
   CeleIndexRoute: typeof CeleIndexRoute
 }
 
@@ -58,6 +106,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/historia': {
+      id: '/historia'
+      path: '/historia'
+      fullPath: '/historia'
+      preLoaderRoute: typeof HistoriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ustawienia': {
+      id: '/ustawienia'
+      path: '/ustawienia'
+      fullPath: '/ustawienia'
+      preLoaderRoute: typeof UstawieniaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cele/': {
       id: '/cele/'
       path: '/cele'
@@ -65,11 +127,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CeleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cele/$id': {
+      id: '/cele/$id'
+      path: '/cele/$id'
+      fullPath: '/cele/$id'
+      preLoaderRoute: typeof CeleIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cele/nowy': {
+      id: '/cele/nowy'
+      path: '/cele/nowy'
+      fullPath: '/cele/nowy'
+      preLoaderRoute: typeof CeleNowyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HistoriaRoute: HistoriaRoute,
+  UstawieniaRoute: UstawieniaRoute,
+  CeleIdRoute: CeleIdRoute,
+  CeleNowyRoute: CeleNowyRoute,
   CeleIndexRoute: CeleIndexRoute,
 }
 export const routeTree = rootRouteImport
