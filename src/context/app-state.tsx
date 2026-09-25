@@ -22,6 +22,7 @@ interface AppState {
   data: AppData;
   saveDayEntry: (input: { goalId: string; answer: DayAnswer; note: string }) => void;
   createGoal: (draft: GoalDraft) => Goal;
+  updateGoal: (goalId: string, draft: GoalDraft) => void;
   updateGoalProgress: (goalId: string, progress: number) => void;
   toggleMilestone: (milestoneId: string) => void;
   setPrimaryGoal: (goalId: string) => void;
@@ -66,6 +67,32 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         setData((prev) => ({ ...prev, goals: [...prev.goals, goal] }));
         return goal;
       },
+
+      updateGoal: (goalId, draft) =>
+        setData((prev) => ({
+          ...prev,
+          goals: prev.goals.map((goal) =>
+            goal.id === goalId
+              ? {
+                  ...goal,
+                  title: draft.title.trim(),
+                  why: draft.why.trim(),
+                  horizon: draft.horizon,
+                  targetDate: draft.targetDate,
+                  progress: draft.progress,
+                  milestones: draft.milestoneTitles
+                    .filter((title) => title.trim().length > 0)
+                    .map((title, index) => ({
+                      id: goal.milestones[index]?.id ?? newId("ms"),
+                      goalId,
+                      title: title.trim(),
+                      done: goal.milestones[index]?.done ?? false,
+                      dueDate: goal.milestones[index]?.dueDate ?? null,
+                    })),
+                }
+              : goal,
+          ),
+        })),
 
       updateGoalProgress: (goalId, progress) =>
         setData((prev) => ({
